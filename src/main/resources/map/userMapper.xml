@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+
+<mapper namespace="com.edu.dao.IUserDao">
+
+  <select id="isExistUser"  parameterType="String"
+  resultType="int">
+    select count(username) from neuedu_user where username=#{username}
+  </select>
+  <select id="findUserAndPwd"  parameterType="java.util.HashMap"
+          resultType="com.edu.pojo.User">
+    select * from neuedu_user where username=#{username} and password=#{password}
+  </select>
+<insert id="addUser" keyProperty="id" useGeneratedKeys="true" parameterType="com.edu.pojo.User" >
+        insert into neuedu_user(username,password,email,phone,question,answer,role,create_time,ip,update_time)
+         values(#{username},#{password},#{email},#{phone},#{question},#{answer},#{role},now(),#{ip},now())
+
+</insert>
+    <update id="updateUser" parameterType="com.edu.pojo.User" >
+
+        update neuedu_user set password=#{password},email=#{email},phone=#{phone},role=#{role},
+        update_time=now() where id=#{id}
+    </update>
+
+</mapper>
